@@ -1,25 +1,47 @@
 # Prelegal
 
-A SaaS platform for drafting common legal agreements through AI-assisted conversation. Users describe what they need in chat, and the app extracts fields into a live document preview with PDF download.
+A platform for drafting common legal agreements through AI-assisted conversation. Describe what you need in chat, and Prelegal extracts fields into a live document preview with PDF download.
 
-This project was built by running Jira tickets through Claude Code. You can follow the same workflow yourself — see the skills in the `.claude` directory.
+Built with FastAPI, Next.js, and LiteLLM via OpenRouter. Document templates are based on [CommonPaper](https://commonpaper.com/) standard terms.
 
-If you have skills to add or more instructions to contribute, please add them to `community_contributions` and send a PR.
+**Repository:** [github.com/ktuladhar/prelegal](https://github.com/ktuladhar/prelegal)
 
 ## Features
 
 - **AI chat drafting** — Conversational field extraction via LiteLLM/OpenRouter with structured outputs
-- **11 document types** — Mutual NDA, Cloud Service Agreement, Pilot Agreement, Design Partner, SLA, Professional Services, Partnership, Software License, DPA, BAA, AI Addendum, and more (see `catalog.json`)
-- **Live preview & PDF export** — Document updates as fields are gathered; download when complete
+- **11 document types** — Mutual NDA, Cloud Service Agreement, Pilot Agreement, Design Partner, SLA, Professional Services, Partnership, Software License, DPA, BAA, and AI Addendum (see `catalog.json`)
+- **Live preview & PDF export** — Preview updates as fields are gathered; download when complete
 - **User accounts** — Sign up, sign in, and save documents to your account
+- **Light & dark themes** — Toggle in the header; preference is saved locally
 - **Docker deployment** — Single container serving the static Next.js frontend and FastAPI backend
 
 ## Quick Start
 
 ### Prerequisites
 
-- Docker and Docker Compose installed
-- An `OPENROUTER_API_KEY` in a `.env` file at the project root (for AI chat)
+- Docker and Docker Compose
+- An OpenRouter API key for AI chat
+
+### Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/ktuladhar/prelegal.git
+   cd prelegal
+   ```
+
+2. Create a `.env` file at the project root:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Add your key:
+
+   ```
+   OPENROUTER_API_KEY=your_openrouter_api_key_here
+   ```
 
 ### Running the Application
 
@@ -35,7 +57,7 @@ If you have skills to add or more instructions to contribute, please add them to
 .\scripts\start-windows.ps1
 ```
 
-The application will be available at [http://localhost:8000](http://localhost:8000)
+Open [http://localhost:8000](http://localhost:8000)
 
 ### Stopping the Application
 
@@ -53,7 +75,7 @@ The application will be available at [http://localhost:8000](http://localhost:80
 
 ## Development
 
-### Frontend Only
+### Frontend only
 
 ```bash
 cd frontend
@@ -61,9 +83,9 @@ npm install
 npm run dev
 ```
 
-Available at [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000)
 
-### Backend Only
+### Backend only
 
 ```bash
 cd backend
@@ -71,7 +93,14 @@ uv sync
 uv run uvicorn main:app --reload
 ```
 
-Available at [http://localhost:8000](http://localhost:8000)
+API at [http://localhost:8000](http://localhost:8000)
+
+### Tests
+
+```bash
+cd frontend
+npm test
+```
 
 ## Project Structure
 
@@ -82,33 +111,42 @@ prelegal/
   scripts/         # Start/stop scripts (Mac, Linux, Windows)
   templates/       # Legal document templates (CommonPaper, CC BY 4.0)
   catalog.json     # Document type catalog
+  .claude/         # Claude Code skills and project instructions
 ```
 
 ## API Endpoints
 
 ### Auth
 
-- `POST /api/auth/signup` — Create account
-- `POST /api/auth/signin` — Sign in (JWT in HttpOnly cookie)
-- `POST /api/auth/signout` — Sign out
-- `GET /api/auth/me` — Current user
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/signup` | Create account |
+| `POST` | `/api/auth/signin` | Sign in (JWT in HttpOnly cookie) |
+| `POST` | `/api/auth/signout` | Sign out |
+| `GET` | `/api/auth/me` | Current user |
 
 ### Documents (auth required)
 
-- `GET /api/documents` — List saved documents
-- `POST /api/documents` — Save document
-- `GET /api/documents/{id}` — Get document
-- `PUT /api/documents/{id}` — Update document
-- `DELETE /api/documents/{id}` — Delete document
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/documents` | List saved documents |
+| `POST` | `/api/documents` | Save document |
+| `GET` | `/api/documents/{id}` | Get document |
+| `PUT` | `/api/documents/{id}` | Update document |
+| `DELETE` | `/api/documents/{id}` | Delete document |
 
 ### Chat
 
-- `GET /api/chat/greeting` — AI greeting
-- `POST /api/chat/message` — Send message and receive AI response
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/chat/greeting` | AI greeting |
+| `POST` | `/api/chat/message` | Send message and receive AI response |
 
 ### Other
 
-- `GET /api/health` — Health check
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/health` | Health check |
 
 ## Document Templates
 
@@ -116,26 +154,50 @@ Legal templates in `templates/` are sourced from [CommonPaper](https://github.co
 
 ## Design & Branding
 
-The UI uses a consistent brand palette defined in `frontend/src/app/globals.css` and documented in `CLAUDE.md`:
+### Color palette
 
-| Token | Hex | Usage |
-|-------|-----|-------|
+Defined in `frontend/src/app/globals.css`:
+
+| Token | Light | Usage |
+|-------|-------|-------|
 | Navy | `#032147` | Headings, primary text |
 | Blue | `#209dd7` | Links, secondary actions, AI accents |
 | Purple | `#753991` | Primary buttons (Sign In, Send) |
 | Yellow | `#ecad0a` | Accent highlights |
 | Gray | `#888888` | Secondary text |
 
-Brand assets live in `frontend/public/`:
+Dark mode uses the same brand accents with adjusted surfaces and text colors via CSS variables on `[data-theme="dark"]`.
+
+### Typography
+
+| Context | Font |
+|---------|------|
+| UI (chat, nav, modals) | [Inter](https://fonts.google.com/specimen/Inter) |
+| Document preview & PDFs | [Source Serif 4](https://fonts.google.com/specimen/Source+Serif+4) |
+
+### Brand assets
+
+Files in `frontend/public/`:
 
 - `logo.svg` — App icon and favicon (document + AI sparkle motif)
-- `hero-pattern.svg` — Subtle background gradient with grid overlay
+- `hero-pattern.svg` — Light-mode page background with brand-color glows
 - `site.webmanifest` — PWA manifest with theme colors
+- `fonts/source-serif-4/` — Embedded serif fonts for PDF generation
 
-Shared UI classes (`btn-primary`, `btn-secondary`, `panel-card`, `badge-purple`, etc.) are in `globals.css`. The `BrandLogo` component is used in the header and auth modal.
+### UI components
+
+Shared CSS classes (`btn-primary`, `panel-card`, `badge-purple`, etc.) live in `globals.css`. Key React components:
+
+- `BrandLogo` — Header and auth modal branding
+- `ThemeToggle` — Light/dark theme switcher in the header
+- `ChatInterface` — AI conversation panel
+- `DocumentPreview` — Live document preview
+- `AuthModal`, `DocumentsModal`, `UserMenu` — Auth and document management
+
+See `CLAUDE.md` for full project conventions and implementation notes.
 
 ## License
 
-This project’s source code is licensed under the [MIT License](LICENSE).
+Source code is licensed under the [MIT License](LICENSE) — Copyright (c) 2026 Kaushal Dhar Tuladhar.
 
 Document templates are not covered by the MIT License; they remain under CC BY 4.0 as noted above.
