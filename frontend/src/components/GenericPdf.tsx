@@ -4,12 +4,13 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { DocumentType, DocumentFormData, DOCUMENT_NAMES } from '@/types/documents';
 import { formatDate, placeholder } from '@/utils/nda';
 import { getFieldConfig } from '@/utils/documentConfig';
+import { PDF_SERIF_FAMILY } from '@/utils/pdfFonts';
 
 const styles = StyleSheet.create({
   page: {
     padding: 50,
     fontSize: 10,
-    fontFamily: 'Helvetica',
+    fontFamily: PDF_SERIF_FAMILY,
     lineHeight: 1.5,
   },
   header: {
@@ -18,7 +19,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: PDF_SERIF_FAMILY,
+    fontWeight: 700,
     marginBottom: 5,
   },
   subtitle: {
@@ -33,12 +35,14 @@ const styles = StyleSheet.create({
   },
   coverPageTitle: {
     fontSize: 14,
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: PDF_SERIF_FAMILY,
+    fontWeight: 700,
     marginBottom: 10,
   },
   sectionTitle: {
     fontSize: 9,
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: PDF_SERIF_FAMILY,
+    fontWeight: 700,
     color: '#475569',
     textTransform: 'uppercase',
     marginBottom: 3,

@@ -54,6 +54,16 @@ Backend available at http://localhost:8000
 - Dark Navy: `#032147` (headings)
 - Gray Text: `#888888`
 
+## UI Assets
+
+Brand visuals are in `frontend/public/` and wired through `frontend/src/app/globals.css`:
+
+- `logo.svg` — Favicon and header logo (navy square, blue-to-purple document, gold AI sparkle)
+- `hero-pattern.svg` — Full-page background with soft brand-color glows and grid
+- `site.webmanifest` — Theme color `#032147`, background `#f4f7fb`
+
+Reusable components: `BrandLogo`, shared button/badge/panel classes in CSS. All modals and the chat interface use the brand palette consistently.
+
 ## Implementation Status
 
 ### Completed (PL-4)

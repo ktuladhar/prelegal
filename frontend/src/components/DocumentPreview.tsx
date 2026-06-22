@@ -12,33 +12,49 @@ interface DocumentPreviewProps {
 }
 
 export function DocumentPreview({ documentType, formData }: DocumentPreviewProps) {
-  // Initial state - no document type detected yet
   if (!documentType) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 text-center">
-        <div className="w-16 h-16 mb-4 text-slate-300">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="flex flex-col items-center justify-center min-h-64 text-center px-6 py-10">
+        <div className="w-20 h-20 mb-5 rounded-2xl bg-gradient-to-br from-brand-blue/10 to-brand-purple/10 flex items-center justify-center">
+          <svg className="w-10 h-10 text-brand-blue/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <p className="text-slate-500 mb-2">Tell me what document you need</p>
-        <p className="text-sm text-slate-400">The preview will appear as we gather information</p>
+        <p className="text-brand-navy font-semibold mb-2">Your document preview will appear here</p>
+        <p className="text-sm text-brand-gray max-w-xs">
+          Tell the AI assistant what agreement you need — NDA, pilot, cloud service, and more.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {['Mutual NDA', 'Pilot Agreement', 'Cloud Service'].map((label) => (
+            <span key={label} className="badge-blue">{label}</span>
+          ))}
+        </div>
       </div>
     );
   }
 
-  // Route to the appropriate preview component
   switch (documentType) {
     case DocumentType.MUTUAL_NDA:
-      return <NDAPreview formData={formData as MutualNDAData} />;
+      return (
+        <div className="document-preview">
+          <NDAPreview formData={formData as MutualNDAData} />
+        </div>
+      );
 
     case DocumentType.PILOT:
-      return <PilotPreview formData={formData as PilotData} />;
+      return (
+        <div className="document-preview">
+          <PilotPreview formData={formData as PilotData} />
+        </div>
+      );
 
     case DocumentType.CLOUD_SERVICE:
-      return <CloudServicePreview formData={formData as CloudServiceData} />;
+      return (
+        <div className="document-preview">
+          <CloudServicePreview formData={formData as CloudServiceData} />
+        </div>
+      );
 
-    // For documents without specific preview components, use the generic preview
     case DocumentType.DESIGN_PARTNER:
     case DocumentType.SLA:
     case DocumentType.PROFESSIONAL_SERVICES:
@@ -47,12 +63,16 @@ export function DocumentPreview({ documentType, formData }: DocumentPreviewProps
     case DocumentType.DPA:
     case DocumentType.BAA:
     case DocumentType.AI_ADDENDUM:
-      return <GenericPreview documentType={documentType} formData={formData} />;
+      return (
+        <div className="document-preview">
+          <GenericPreview documentType={documentType} formData={formData} />
+        </div>
+      );
 
     default:
       return (
         <div className="flex flex-col items-center justify-center h-64 text-center">
-          <p className="text-slate-500">Preview not available for this document type</p>
+          <p className="text-brand-gray">Preview not available for this document type</p>
         </div>
       );
   }

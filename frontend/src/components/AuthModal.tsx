@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { BrandLogo } from '@/components/BrandLogo';
 
 interface AuthModalProps {
   onClose: () => void;
@@ -15,7 +16,6 @@ export function AuthModal({ onClose }: AuthModalProps) {
   const [loading, setLoading] = useState(false);
   const { signin, signup } = useAuth();
 
-  // Handle Escape key to close modal
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -49,28 +49,36 @@ export function AuthModal({ onClose }: AuthModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-slate-900">
-            {mode === 'signin' ? 'Sign In' : 'Create Account'}
-          </h2>
+    <div className="fixed inset-0 modal-overlay backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="modal-panel rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl shadow-brand-navy/20 animate-fade-up">
+        <div className="flex justify-between items-start mb-6">
+          <BrandLogo size={40} />
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 text-2xl leading-none"
+            className="text-brand-gray hover:text-brand-navy text-2xl leading-none p-1"
+            aria-label="Close"
           >
             &times;
           </button>
         </div>
 
-        <div className="flex mb-6 bg-slate-100 rounded-lg p-1">
+        <h2 className="text-2xl font-bold text-brand-navy mb-1">
+          {mode === 'signin' ? 'Welcome back' : 'Create your account'}
+        </h2>
+        <p className="text-sm text-brand-gray mb-6">
+          {mode === 'signin'
+            ? 'Sign in to save and manage your legal documents.'
+            : 'Start drafting agreements with AI assistance.'}
+        </p>
+
+        <div className="flex mb-6 bg-surface-muted rounded-xl p-1 border border-border/70">
           <button
             type="button"
             onClick={() => switchMode('signin')}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+            className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
               mode === 'signin'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'tab-toggle-active shadow-sm'
+                : 'text-brand-gray hover:text-brand-navy'
             }`}
           >
             Sign In
@@ -78,10 +86,10 @@ export function AuthModal({ onClose }: AuthModalProps) {
           <button
             type="button"
             onClick={() => switchMode('signup')}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+            className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
               mode === 'signup'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'tab-toggle-active shadow-sm'
+                : 'text-brand-gray hover:text-brand-navy'
             }`}
           >
             Sign Up
@@ -90,7 +98,7 @@ export function AuthModal({ onClose }: AuthModalProps) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-brand-navy mb-1.5">
               Email
             </label>
             <input
@@ -98,13 +106,13 @@ export function AuthModal({ onClose }: AuthModalProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input-field"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-brand-navy mb-1.5">
               Password
             </label>
             <input
@@ -113,13 +121,13 @@ export function AuthModal({ onClose }: AuthModalProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input-field"
               placeholder={mode === 'signup' ? 'At least 8 characters' : 'Your password'}
             />
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            <div className="alert-error px-4 py-3 rounded-xl text-sm">
               {error}
             </div>
           )}
@@ -127,20 +135,20 @@ export function AuthModal({ onClose }: AuthModalProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-purple-700 text-white rounded-lg font-medium hover:bg-purple-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="btn-primary w-full py-3"
           >
             {loading ? 'Please wait...' : mode === 'signin' ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-500">
+        <p className="mt-5 text-center text-sm text-brand-gray">
           {mode === 'signin' ? (
             <>
               Don&apos;t have an account?{' '}
               <button
                 type="button"
                 onClick={() => switchMode('signup')}
-                className="text-blue-600 hover:underline"
+                className="text-brand-blue hover:underline font-medium"
               >
                 Sign up
               </button>
@@ -151,7 +159,7 @@ export function AuthModal({ onClose }: AuthModalProps) {
               <button
                 type="button"
                 onClick={() => switchMode('signin')}
-                className="text-blue-600 hover:underline"
+                className="text-brand-blue hover:underline font-medium"
               >
                 Sign in
               </button>

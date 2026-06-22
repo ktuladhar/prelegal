@@ -96,7 +96,7 @@ export function DocumentDownload({ documentType, formData }: DocumentDownloadPro
         onClick={handleDownload}
         disabled={isGenerating}
         aria-busy={isGenerating}
-        className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed shadow-sm"
+        className="btn-secondary flex items-center justify-center gap-2 px-6 py-2.5"
       >
         {isGenerating ? (
           <>

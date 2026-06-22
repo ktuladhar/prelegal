@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1440" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0f7fc"/>
+      <stop offset="0.45" stop-color="#f5f0fa"/>
+      <stop offset="1" stop-color="#eef4fb"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(220 180) rotate(45) scale(420)">
+      <stop stop-color="#209dd7" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#209dd7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1180 120) rotate(45) scale(380)">
+      <stop stop-color="#753991" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#753991" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 760) rotate(45) scale(320)">
+      <stop stop-color="#ecad0a" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ecad0a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)"/>
+  <rect width="1440" height="900" fill="url(#glow1)"/>
+  <rect width="1440" height="900" fill="url(#glow2)"/>
+  <rect width="1440" height="900" fill="url(#glow3)"/>
+  <g opacity="0.04" stroke="#032147" stroke-width="1">
+    <path d="M0 120h1440M0 240h1440M0 360h1440M0 480h1440M0 600h1440M0 720h1440"/>
+    <path d="M120 0v900M240 0v900M360 0v900M480 0v900M600 0v900M720 0v900M840 0v900M960 0v900M1080 0v900M1200 0v900M1320 0v900"/>
+  </g>
+  <g opacity="0.035" fill="#032147">
+    <path d="M80 640h48v64H80zM160 560h40v56h-40zM240 680h44v52h-44z"/>
+    <path d="M1120 180h52v68h-52zM1220 260h44v56h-44zM1040 320h40v48h-40z"/>
+  </g>
+</svg>

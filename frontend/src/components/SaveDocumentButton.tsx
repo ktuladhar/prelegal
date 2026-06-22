@@ -74,7 +74,7 @@ export function SaveDocumentButton({ documentType, formData, onSaved }: SaveDocu
     <>
       <button
         onClick={handleOpenModal}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+        className="btn-secondary flex items-center gap-2 py-2.5"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -83,13 +83,13 @@ export function SaveDocumentButton({ documentType, formData, onSaved }: SaveDocu
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+        <div className="fixed inset-0 modal-overlay backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="modal-panel rounded-2xl p-6 max-w-md w-full shadow-2xl shadow-brand-navy/20 animate-fade-up">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-slate-900">Save Document</h2>
+              <h2 className="text-xl font-bold text-brand-navy">Save Document</h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-slate-400 hover:text-slate-600 text-2xl leading-none"
+                className="text-brand-gray hover:text-brand-navy text-2xl leading-none"
               >
                 &times;
               </button>
@@ -102,12 +102,12 @@ export function SaveDocumentButton({ documentType, formData, onSaved }: SaveDocu
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <p className="text-lg font-medium text-slate-900">Document saved!</p>
+                <p className="text-lg font-medium text-brand-navy">Document saved!</p>
               </div>
             ) : (
               <form onSubmit={handleSave}>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-navy mb-1.5">
                     Document Title
                   </label>
                   <input
@@ -115,20 +115,20 @@ export function SaveDocumentButton({ documentType, formData, onSaved }: SaveDocu
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field"
                     placeholder="Enter a title for your document"
                   />
                 </div>
 
-                <div className="mb-4 p-3 bg-slate-50 rounded-lg">
-                  <p className="text-sm text-slate-600">
+                <div className="mb-4 p-3 bg-surface-muted rounded-xl border border-border/70">
+                  <p className="text-sm text-brand-gray">
                     <span className="font-medium">Type:</span>{' '}
                     {DOCUMENT_NAMES[documentType]}
                   </p>
                 </div>
 
                 {error && (
-                  <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  <div className="mb-4 alert-error px-4 py-3 rounded-lg text-sm">
                     {error}
                   </div>
                 )}
@@ -137,14 +137,14 @@ export function SaveDocumentButton({ documentType, formData, onSaved }: SaveDocu
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors"
+                    className="flex-1 btn-ghost border border-border"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={saving || !title.trim()}
-                    className="flex-1 px-4 py-2 bg-purple-700 text-white rounded-lg font-medium hover:bg-purple-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 btn-primary"
                   >
                     {saving ? 'Saving...' : 'Save Document'}
                   </button>
