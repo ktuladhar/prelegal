@@ -4,8 +4,6 @@ A platform for drafting common legal agreements through AI-assisted conversation
 
 Built with FastAPI, Next.js, and LiteLLM via OpenRouter. Document templates are based on [CommonPaper](https://commonpaper.com/) standard terms.
 
-**Repository:** [github.com/ktuladhar/prelegal](https://github.com/ktuladhar/prelegal)
-
 ## Features
 
 - **AI chat drafting** — Conversational field extraction via LiteLLM/OpenRouter with structured outputs
